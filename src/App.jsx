@@ -112,7 +112,7 @@ const Protocols = () => {
   return (
     <section id="o-nas" ref={containerRef} className="relative hidden md:block" style={{ height: '300vh' }}>
       <div className="protocol-card absolute top-0 left-0 h-[100dvh] w-full flex items-center justify-center p-6 bg-cream text-charcoal">
-        <div className="max-w-3xl w-full flex justify-between items-end border-b border-current/20 pb-8">
+        <div className="max-w-5xl w-full flex justify-between items-end border-b border-current/20 pb-8 gap-12">
           <div>
             <div className="font-mono text-sm tracking-widest opacity-60 mb-4">PROTOKÓŁ 01</div>
             <h2 className="text-5xl md:text-8xl font-drama italic tracking-tight">Diagnoza</h2>
@@ -121,7 +121,7 @@ const Protocols = () => {
         </div>
       </div>
       <div className="protocol-card absolute top-[100vh] left-0 h-[100dvh] w-full flex items-center justify-center p-6 bg-rose text-cream shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-        <div className="max-w-3xl w-full flex justify-between items-end border-b border-current/20 pb-8">
+        <div className="max-w-5xl w-full flex justify-between items-end border-b border-current/20 pb-8 gap-12">
           <div>
             <div className="font-mono text-sm tracking-widest opacity-60 mb-4">PROTOKÓŁ 02</div>
             <h2 className="text-5xl md:text-8xl font-drama italic tracking-tight">Zabieg</h2>
@@ -130,7 +130,7 @@ const Protocols = () => {
         </div>
       </div>
       <div className="protocol-card absolute top-[200vh] left-0 h-[100dvh] w-full flex items-center justify-center p-6 bg-moss text-cream shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-        <div className="max-w-3xl w-full flex justify-between items-end border-b border-current/20 pb-8">
+        <div className="max-w-5xl w-full flex justify-between items-end border-b border-current/20 pb-8 gap-12">
           <div>
             <div className="font-mono text-sm tracking-widest opacity-60 mb-4">PROTOKÓŁ 03</div>
             <h2 className="text-5xl md:text-8xl font-drama italic tracking-tight">Domknięcie</h2>
@@ -142,41 +142,49 @@ const Protocols = () => {
   );
 };
 
-const Pricing = () => (
+const Pricing = ({ onOpenBooking }) => (
   <section id="cennik" className="py-24 px-6 md:px-12 max-w-6xl mx-auto">
     <div className="text-center mb-16">
       <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Cennik orientacyjny</h2>
       <p className="text-charcoal/60 max-w-lg mx-auto">Finalna cena zależy od zużycia materiału i długości włosów. Dokładną wycenę podajemy podczas konsultacji.</p>
     </div>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-      <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 magnetic-btn">
-        <h3 className="text-2xl font-bold mb-2">Strzyżenie Damskie</h3>
-        <p className="text-charcoal/60 mb-8 font-mono text-sm">od 120 PLN</p>
-        <ul className="space-y-4 mb-8 text-sm">
-          <li className="flex gap-3"><Droplet className="w-5 h-5 text-moss shrink-0" /> Mycie relaksacyjne</li>
-          <li className="flex gap-3"><Scissors className="w-5 h-5 text-moss shrink-0" /> Precyzyjne cięcie</li>
-          <li className="flex gap-3"><Sparkles className="w-5 h-5 text-moss shrink-0" /> Modelowanie</li>
-        </ul>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+      <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 magnetic-btn flex flex-col">
+        <div className="flex-grow">
+          <h3 className="text-2xl font-bold mb-2">Strzyżenie Damskie</h3>
+          <p className="text-charcoal/60 mb-8 font-mono text-sm">od 120 PLN</p>
+          <ul className="space-y-4 mb-8 text-sm">
+            <li className="flex gap-3"><Droplet className="w-5 h-5 text-moss shrink-0" /> Mycie relaksacyjne</li>
+            <li className="flex gap-3"><Scissors className="w-5 h-5 text-moss shrink-0" /> Precyzyjne cięcie</li>
+            <li className="flex gap-3"><Sparkles className="w-5 h-5 text-moss shrink-0" /> Modelowanie</li>
+          </ul>
+        </div>
+        <button onClick={() => onOpenBooking('Strzyżenie Damskie')} className="w-full border border-charcoal/20 text-charcoal py-3 rounded-full font-bold hover:bg-charcoal hover:text-cream transition-colors mt-4">Wybieram</button>
       </div>
-      <div className="bg-rose text-cream rounded-[2.5rem] p-10 shadow-2xl scale-105 z-10 magnetic-btn">
-        <div className="inline-block bg-cream/20 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-6">BESTSELLER</div>
-        <h3 className="text-3xl font-bold mb-2">Koloryzacja Globalna</h3>
-        <p className="text-cream/80 mb-8 font-mono text-sm">od 250 PLN</p>
-        <ul className="space-y-4 mb-8 text-sm text-cream/90">
-          <li className="flex gap-3"><Droplet className="w-5 h-5 shrink-0" /> Ochrona struktury</li>
-          <li className="flex gap-3"><Scissors className="w-5 h-5 shrink-0" /> Personalizowany kolor</li>
-          <li className="flex gap-3"><Sparkles className="w-5 h-5 shrink-0" /> Tonowanie</li>
-        </ul>
-        <button className="w-full bg-cream text-charcoal py-3 rounded-full font-bold hover:scale-105 transition-transform">Wybieram</button>
+      <div className="bg-rose text-cream rounded-[2.5rem] p-10 shadow-2xl scale-105 z-10 magnetic-btn flex flex-col">
+        <div className="flex-grow">
+          <div className="inline-block bg-cream/20 px-3 py-1 rounded-full text-xs font-bold tracking-wider mb-6">BESTSELLER</div>
+          <h3 className="text-3xl font-bold mb-2">Koloryzacja Globalna</h3>
+          <p className="text-cream/80 mb-8 font-mono text-sm">od 250 PLN</p>
+          <ul className="space-y-4 mb-8 text-sm text-cream/90">
+            <li className="flex gap-3"><Droplet className="w-5 h-5 shrink-0" /> Ochrona struktury</li>
+            <li className="flex gap-3"><Scissors className="w-5 h-5 shrink-0" /> Personalizowany kolor</li>
+            <li className="flex gap-3"><Sparkles className="w-5 h-5 shrink-0" /> Tonowanie</li>
+          </ul>
+        </div>
+        <button onClick={() => onOpenBooking('Koloryzacja Globalna')} className="w-full bg-cream text-charcoal py-3 rounded-full font-bold hover:scale-105 transition-transform mt-4">Wybieram</button>
       </div>
-      <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 magnetic-btn">
-        <h3 className="text-2xl font-bold mb-2">Regeneracja Premium</h3>
-        <p className="text-charcoal/60 mb-8 font-mono text-sm">od 180 PLN</p>
-        <ul className="space-y-4 mb-8 text-sm">
-          <li className="flex gap-3"><Droplet className="w-5 h-5 text-moss shrink-0" /> Peeling skóry głowy</li>
-          <li className="flex gap-3"><Scissors className="w-5 h-5 text-moss shrink-0" /> Wtłaczanie ampułki</li>
-          <li className="flex gap-3"><Sparkles className="w-5 h-5 text-moss shrink-0" /> Sauna na włosy</li>
-        </ul>
+      <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 magnetic-btn flex flex-col">
+        <div className="flex-grow">
+          <h3 className="text-2xl font-bold mb-2">Regeneracja Premium</h3>
+          <p className="text-charcoal/60 mb-8 font-mono text-sm">od 180 PLN</p>
+          <ul className="space-y-4 mb-8 text-sm">
+            <li className="flex gap-3"><Droplet className="w-5 h-5 text-moss shrink-0" /> Peeling skóry głowy</li>
+            <li className="flex gap-3"><Scissors className="w-5 h-5 text-moss shrink-0" /> Wtłaczanie ampułki</li>
+            <li className="flex gap-3"><Sparkles className="w-5 h-5 text-moss shrink-0" /> Sauna na włosy</li>
+          </ul>
+        </div>
+        <button onClick={() => onOpenBooking('Regeneracja Premium')} className="w-full border border-charcoal/20 text-charcoal py-3 rounded-full font-bold hover:bg-charcoal hover:text-cream transition-colors mt-4">Wybieram</button>
       </div>
     </div>
   </section>
@@ -249,7 +257,7 @@ const Footer = ({ onOpenBooking }) => (
   </footer>
 );
 
-const BookingModal = ({ isOpen, onClose }) => {
+const BookingModal = ({ isOpen, onClose, selectedService, setSelectedService }) => {
   if (!isOpen) return null;
 
   return (
@@ -273,11 +281,15 @@ const BookingModal = ({ isOpen, onClose }) => {
         <form className="space-y-5">
           <div>
             <label className="block text-sm font-medium mb-2 text-charcoal/80">Wybierz usługę</label>
-            <select className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal">
-              <option>-- Wybierz z listy --</option>
-              <option>Strzyżenie Damskie</option>
-              <option>Koloryzacja Globalna</option>
-              <option>Regeneracja Premium</option>
+            <select 
+              value={selectedService}
+              onChange={(e) => setSelectedService(e.target.value)}
+              className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal"
+            >
+              <option value="">-- Wybierz z listy --</option>
+              <option value="Strzyżenie Damskie">Strzyżenie Damskie</option>
+              <option value="Koloryzacja Globalna">Koloryzacja Globalna</option>
+              <option value="Regeneracja Premium">Regeneracja Premium</option>
             </select>
           </div>
 
@@ -323,18 +335,29 @@ const BookingModal = ({ isOpen, onClose }) => {
 
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
+
+  const handleOpenBooking = (service) => {
+    setSelectedService(typeof service === 'string' ? service : "");
+    setIsBookingOpen(true);
+  };
 
   return (
     <div className="relative w-full overflow-hidden bg-cream font-sans text-charcoal selection:bg-rose selection:text-cream">
-      <Navbar onOpenBooking={() => setIsBookingOpen(true)} />
-      <Hero onOpenBooking={() => setIsBookingOpen(true)} />
+      <Navbar onOpenBooking={handleOpenBooking} />
+      <Hero onOpenBooking={handleOpenBooking} />
       <Services />
       <Manifesto />
       <Protocols />
-      <Pricing />
+      <Pricing onOpenBooking={handleOpenBooking} />
       <Contact />
-      <Footer onOpenBooking={() => setIsBookingOpen(true)} />
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+      <Footer onOpenBooking={handleOpenBooking} />
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)} 
+        selectedService={selectedService}
+        setSelectedService={setSelectedService}
+      />
     </div>
   );
 }
