@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ArrowUpRight, Droplet, Scissors, Sparkles, X, Calendar, Clock } from 'lucide-react';
+import { ArrowUpRight, Droplet, Scissors, Sparkles, X, Calendar, Clock, CheckCircle } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -33,7 +33,7 @@ const Hero = ({ onOpenBooking }) => (
         <p className="hero-text mt-8 text-cream/80 max-w-md text-lg font-medium">Profesjonalna koloryzacja, nowoczesne strzyżenie i głęboka pielęgnacja w sercu Oławy.</p>
         <div className="hero-text mt-10">
           <button onClick={onOpenBooking} className="magnetic-btn bg-cream text-charcoal px-8 py-4 rounded-full font-semibold flex items-center gap-2 hover:bg-rose hover:text-cream transition-colors">
-            Umów wizytę 
+            Umów wizytę
             <ArrowUpRight className="w-5 h-5" />
           </button>
         </div>
@@ -96,7 +96,7 @@ const Protocols = () => {
 
   useGSAP(() => {
     const cards = gsap.utils.toArray('.protocol-card');
-    
+
     cards.forEach((card, index) => {
       // Pin each card when it reaches the top, until the very last card finishes scrolling
       ScrollTrigger.create({
@@ -190,36 +190,56 @@ const Pricing = ({ onOpenBooking }) => (
   </section>
 );
 
-const Contact = () => (
-  <section id="kontakt" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kontakt</h2>
-      <p className="text-charcoal/60 max-w-lg mx-auto">Masz pytania? Chcesz ustalić szczegóły? Napisz do nas.</p>
-    </div>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-      <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 md:p-12 shadow-sm">
-        <form className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium mb-2 text-charcoal/80">Imię i nazwisko</label>
-            <input required className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" placeholder="Twoje imię" type="text" name="name" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2 text-charcoal/80">Adres email</label>
-            <input required className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" placeholder="twoj@email.pl" type="email" name="email" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2 text-charcoal/80">Wiadomość</label>
-            <textarea required name="message" rows="4" className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors resize-none" placeholder="W czym możemy pomóc?"></textarea>
-          </div>
-          <button type="submit" className="magnetic-btn w-full bg-charcoal text-cream py-4 rounded-xl font-bold hover:bg-moss transition-colors flex justify-center items-center">Wyślij wiadomość</button>
-        </form>
+const Contact = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    e.target.reset();
+    setTimeout(() => {
+      setIsSubmitted(false);
+    }, 5000);
+  };
+
+  return (
+    <section id="kontakt" className="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Kontakt</h2>
+        <p className="text-charcoal/60 max-w-lg mx-auto">Masz pytania? Chcesz ustalić szczegóły? Napisz do nas.</p>
       </div>
-      <div className="h-full min-h-[400px] w-full bg-charcoal/5 rounded-[2rem] overflow-hidden shadow-xl">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39999.64293910336!2d17.25203387818471!3d50.94191024345326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470fe007bdeb387f%3A0xc3f173b9846b0a88!2sO%C5%82awa!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl" width="100%" height="100%" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-full object-cover" style={{ border: 0, minHeight: '400px' }}></iframe>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="bg-white border border-charcoal/10 rounded-[2rem] p-8 md:p-12 shadow-sm">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label className="block text-sm font-medium mb-2 text-charcoal/80">Imię i nazwisko</label>
+              <input required className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" placeholder="Twoje imię" type="text" name="name" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2 text-charcoal/80">Adres email</label>
+              <input required className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" placeholder="twoj@email.pl" type="email" name="email" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2 text-charcoal/80">Wiadomość</label>
+              <textarea required name="message" rows="4" className="w-full bg-cream/50 border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors resize-none" placeholder="W czym możemy pomóc?"></textarea>
+            </div>
+            {isSubmitted ? (
+              <div className="w-full bg-moss/10 text-moss py-4 rounded-xl font-bold flex justify-center items-center gap-2 border border-moss/20 animate-in fade-in duration-300">
+                <CheckCircle className="w-5 h-5" />
+                Wiadomość została wysłana!
+              </div>
+            ) : (
+              <button type="submit" className="magnetic-btn w-full bg-charcoal text-cream py-4 rounded-xl font-bold hover:bg-moss transition-colors flex justify-center items-center">Wyślij wiadomość</button>
+            )}
+          </form>
+        </div>
+        <div className="h-full min-h-[400px] w-full bg-charcoal/5 rounded-[2rem] overflow-hidden shadow-xl">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39999.64293910336!2d17.25203387818471!3d50.94191024345326!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470fe007bdeb387f%3A0xc3f173b9846b0a88!2sO%C5%82awa!5e0!3m2!1spl!2spl!4v1700000000000!5m2!1spl!2spl" width="100%" height="100%" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full h-full object-cover" style={{ border: 0, minHeight: '400px' }}></iframe>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const Footer = ({ onOpenBooking }) => (
   <footer className="bg-charcoal text-cream pt-24 pb-12 px-6 md:px-12 rounded-t-[3rem] md:rounded-t-[4rem] text-sm">
@@ -258,18 +278,32 @@ const Footer = ({ onOpenBooking }) => (
 );
 
 const BookingModal = ({ isOpen, onClose, selectedService, setSelectedService }) => {
-  if (!isOpen) return null;
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    e.target.reset();
+    setTimeout(() => {
+      setIsSubmitted(false);
+      onClose();
+    }, 3000);
+  };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div 
+      <div
         className="absolute inset-0 bg-charcoal/40 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
+        onClick={() => { setIsSubmitted(false); onClose(); }}
       ></div>
-      
+
       <div className="relative bg-[#F0EBE1] w-full max-w-lg rounded-[2rem] p-8 md:p-10 shadow-2xl z-10 animate-in fade-in zoom-in duration-300">
-        <button 
-          onClick={onClose}
+        <button
+          onClick={() => { setIsSubmitted(false); onClose(); }}
           className="absolute top-6 right-6 p-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full transition-colors"
         >
           <X className="w-5 h-5 text-charcoal/60" />
@@ -278,12 +312,13 @@ const BookingModal = ({ isOpen, onClose, selectedService, setSelectedService }) 
         <h2 className="text-3xl font-drama italic text-charcoal mb-2">Zarezerwuj termin</h2>
         <p className="text-charcoal/60 text-sm mb-8">Wypełnij poniższe dane, aby ustalić wizytę w naszym salonie.</p>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium mb-2 text-charcoal/80">Wybierz usługę</label>
-            <select 
+            <select
               value={selectedService}
               onChange={(e) => setSelectedService(e.target.value)}
+              required
               className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal"
             >
               <option value="">-- Wybierz z listy --</option>
@@ -298,35 +333,42 @@ const BookingModal = ({ isOpen, onClose, selectedService, setSelectedService }) 
               <label className="flex items-center gap-2 text-sm font-medium mb-2 text-charcoal/80">
                 <Calendar className="w-4 h-4" /> Data
               </label>
-              <input type="date" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors text-charcoal" />
+              <input required type="date" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors text-charcoal" />
             </div>
             <div>
               <label className="flex items-center gap-2 text-sm font-medium mb-2 text-charcoal/80">
                 <Clock className="w-4 h-4" /> Godzina
               </label>
-              <select className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal">
-                <option>Wybierz</option>
-                <option>09:00</option>
-                <option>10:00</option>
-                <option>11:00</option>
-                <option>12:00</option>
+              <select required className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal">
+                <option value="">Wybierz</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
               </select>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2 text-charcoal/80">Imię i nazwisko</label>
-            <input type="text" placeholder="Twoje dane" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
+            <input required type="text" placeholder="Twoje dane" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-2 text-charcoal/80">Numer telefonu</label>
-            <input type="tel" placeholder="+48 ___ ___ ___" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
+            <input required type="tel" placeholder="+48 ___ ___ ___" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
           </div>
 
-          <button type="button" className="magnetic-btn w-full bg-charcoal text-cream py-4 rounded-xl font-bold hover:bg-moss transition-colors mt-4">
-            Potwierdź rezerwację
-          </button>
+          {isSubmitted ? (
+            <div className="w-full bg-moss/10 text-moss py-4 rounded-xl font-bold flex justify-center items-center gap-2 border border-moss/20 animate-in fade-in duration-300 mt-4">
+              <CheckCircle className="w-5 h-5" />
+              Rezerwacja została wysłana!
+            </div>
+          ) : (
+            <button type="submit" className="magnetic-btn w-full bg-charcoal text-cream py-4 rounded-xl font-bold hover:bg-moss transition-colors mt-4">
+              Potwierdź rezerwację
+            </button>
+          )}
         </form>
       </div>
     </div>
@@ -352,9 +394,9 @@ function App() {
       <Pricing onOpenBooking={handleOpenBooking} />
       <Contact />
       <Footer onOpenBooking={handleOpenBooking} />
-      <BookingModal 
-        isOpen={isBookingOpen} 
-        onClose={() => setIsBookingOpen(false)} 
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
         selectedService={selectedService}
         setSelectedService={setSelectedService}
       />
