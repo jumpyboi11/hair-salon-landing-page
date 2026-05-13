@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
-import { ArrowUpRight, Droplet, Scissors, Sparkles } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { ArrowUpRight, Droplet, Scissors, Sparkles, X, Calendar, Clock } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Navbar = () => (
+const Navbar = ({ onOpenBooking }) => (
   <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl rounded-[2rem] transition-all duration-300 pointer-events-none">
     <div className="px-6 py-4 flex items-center justify-between pointer-events-auto rounded-[2rem] border border-charcoal/5 bg-cream/80 backdrop-blur-md">
       <div className="text-xl font-bold tracking-tight">Studio Róż</div>
@@ -15,12 +15,12 @@ const Navbar = () => (
         <a href="#usługi" className="link-lift hover:text-rose transition-colors">Usługi</a>
         <a href="#cennik" className="link-lift hover:text-rose transition-colors">Cennik</a>
       </div>
-      <button className="magnetic-btn bg-charcoal text-cream px-6 py-2.5 rounded-full text-sm font-medium hover:bg-moss transition-colors">Zarezerwuj termin</button>
+      <button onClick={onOpenBooking} className="magnetic-btn bg-charcoal text-cream px-6 py-2.5 rounded-full text-sm font-medium hover:bg-moss transition-colors">Zarezerwuj termin</button>
     </div>
   </nav>
 );
 
-const Hero = () => (
+const Hero = ({ onOpenBooking }) => (
   <section className="relative h-[100dvh] w-full overflow-hidden bg-charcoal rounded-b-[2rem] md:rounded-b-[3rem]">
     <div className="hero-bg absolute inset-0 bg-cover bg-center opacity-60" style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=2669&auto=format&fit=crop")' }}></div>
     <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#1A1A1A]/50 to-transparent"></div>
@@ -32,8 +32,8 @@ const Hero = () => (
         </h1>
         <p className="hero-text mt-8 text-cream/80 max-w-md text-lg font-medium">Profesjonalna koloryzacja, nowoczesne strzyżenie i głęboka pielęgnacja w sercu Oławy.</p>
         <div className="hero-text mt-10">
-          <button className="magnetic-btn bg-cream text-charcoal px-8 py-4 rounded-full font-semibold flex items-center gap-2 hover:bg-rose hover:text-cream transition-colors">
-            Umów wizytę
+          <button onClick={onOpenBooking} className="magnetic-btn bg-cream text-charcoal px-8 py-4 rounded-full font-semibold flex items-center gap-2 hover:bg-rose hover:text-cream transition-colors">
+            Umów wizytę 
             <ArrowUpRight className="w-5 h-5" />
           </button>
         </div>
@@ -213,13 +213,13 @@ const Contact = () => (
   </section>
 );
 
-const Footer = () => (
+const Footer = ({ onOpenBooking }) => (
   <footer className="bg-charcoal text-cream pt-24 pb-12 px-6 md:px-12 rounded-t-[3rem] md:rounded-t-[4rem] text-sm">
     <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-cream/10 pb-16">
       <div className="md:col-span-2">
         <h2 className="text-3xl font-bold mb-6">Studio Róż</h2>
         <p className="text-cream/60 max-w-sm mb-8">Przełamujemy schematy w pielęgnacji i koloryzacji. Twoje włosy zasługują na bezkompromisową jakość i organiczne luksusowe produkty.</p>
-        <button className="magnetic-btn border border-cream/20 px-6 py-2 rounded-full hover:bg-cream hover:text-charcoal transition-colors">Zarezerwuj termin</button>
+        <button onClick={onOpenBooking} className="magnetic-btn border border-cream/20 px-6 py-2 rounded-full hover:bg-cream hover:text-charcoal transition-colors">Zarezerwuj termin</button>
       </div>
       <div>
         <h4 className="font-mono text-xs opacity-50 mb-6 tracking-widest uppercase">Kontakt</h4>
@@ -249,17 +249,92 @@ const Footer = () => (
   </footer>
 );
 
+const BookingModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div 
+        className="absolute inset-0 bg-charcoal/40 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      ></div>
+      
+      <div className="relative bg-[#F0EBE1] w-full max-w-lg rounded-[2rem] p-8 md:p-10 shadow-2xl z-10 animate-in fade-in zoom-in duration-300">
+        <button 
+          onClick={onClose}
+          className="absolute top-6 right-6 p-2 bg-charcoal/5 hover:bg-charcoal/10 rounded-full transition-colors"
+        >
+          <X className="w-5 h-5 text-charcoal/60" />
+        </button>
+
+        <h2 className="text-3xl font-drama italic text-charcoal mb-2">Zarezerwuj termin</h2>
+        <p className="text-charcoal/60 text-sm mb-8">Wypełnij poniższe dane, aby ustalić wizytę w naszym salonie.</p>
+
+        <form className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium mb-2 text-charcoal/80">Wybierz usługę</label>
+            <select className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal">
+              <option>-- Wybierz z listy --</option>
+              <option>Strzyżenie Damskie</option>
+              <option>Koloryzacja Globalna</option>
+              <option>Regeneracja Premium</option>
+            </select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium mb-2 text-charcoal/80">
+                <Calendar className="w-4 h-4" /> Data
+              </label>
+              <input type="date" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors text-charcoal" />
+            </div>
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium mb-2 text-charcoal/80">
+                <Clock className="w-4 h-4" /> Godzina
+              </label>
+              <select className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors appearance-none text-charcoal">
+                <option>Wybierz</option>
+                <option>09:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2 text-charcoal/80">Imię i nazwisko</label>
+            <input type="text" placeholder="Twoje dane" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2 text-charcoal/80">Numer telefonu</label>
+            <input type="tel" placeholder="+48 ___ ___ ___" className="w-full bg-white border border-charcoal/10 rounded-xl px-4 py-3 focus:outline-none focus:border-moss transition-colors" />
+          </div>
+
+          <button type="button" className="magnetic-btn w-full bg-charcoal text-cream py-4 rounded-xl font-bold hover:bg-moss transition-colors mt-4">
+            Potwierdź rezerwację
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 function App() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <div className="relative w-full overflow-hidden bg-cream font-sans text-charcoal selection:bg-rose selection:text-cream">
-      <Navbar />
-      <Hero />
+      <Navbar onOpenBooking={() => setIsBookingOpen(true)} />
+      <Hero onOpenBooking={() => setIsBookingOpen(true)} />
       <Services />
       <Manifesto />
       <Protocols />
       <Pricing />
       <Contact />
-      <Footer />
+      <Footer onOpenBooking={() => setIsBookingOpen(true)} />
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }
