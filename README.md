@@ -15,3 +15,6 @@ Co dokładnie tu siedzi:
 - Ciemny motyw z niestandardowymi kolorami, żeby całość wyglądała bardziej premium.
 - W pełni responsywny układ - robione jako mobile-first, więc na telefonie wszystko dobrze się skaluje.
 - Interaktywny cennik oparty na CSS grid.
+
+Live Demo:
+https://hair-salon-landing-page.netlify.app/
