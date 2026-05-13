@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F0EBE1;
+  --color-charcoal: #141414;
+  --color-rose: #C96C55;
+  --color-moss: #2B3B32;
+  
+  --font-sans: Inter, sans-serif;
+  --font-drama: "Playfair Display", serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-charcoal font-sans antialiased selection:bg-rose selection:text-cream;
+  }
+}
+
+@layer utilities {
+  .magnetic-btn {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  .magnetic-btn:hover {
+    @apply scale-[1.02];
+  }
+  .link-lift {
+    @apply relative inline-block transition-transform duration-300;
+  }
+  .link-lift:hover {
+    @apply -translate-y-0.5;
+  }
+}
